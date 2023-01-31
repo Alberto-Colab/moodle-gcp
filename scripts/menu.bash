@@ -2,10 +2,6 @@
 ##
 ##
 server_name=$(hostname)
-redis(){
-	echo "Follow this manual:"
-	echo "https://github.com/google/moodle-on-gcp/blob/main/docs/configuring-redis-cache-with-moodle.md"
-}
 ##
 # Color  Variables
 ##
@@ -22,6 +18,9 @@ ColorBlue(){
 	echo -ne $blue$1$clear
 }
 menu(){
+echo "#########################################################"
+echo "# Artifact Registry and Moodle Image"
+echo "#########################################################"
 echo -ne "
 Moodle GCP - Setup Menu
 $(ColorGreen '1)') Edit Variables ENVS.
@@ -48,12 +47,26 @@ $(ColorBlue 'Choose an option:') "
 
         read a
         case $a in
-	        1) top ; menu ;;
-	        2) cpu_check ; menu ;;
-	        3) tcp_check ; menu ;;
-	        4) kernel_check ; menu ;;
-	        5) all_checks ; menu ;;
-	        18) redis;;
+	        1) ./Deploy/variables_envs.sh ; menu ;;
+	        2) ./Deploy/initial.sh ; menu ;;
+	        3) ./Deploy/network.sh ; menu ;;
+	        4) ./Deploy/deploy-server.sh ; menu ;;
+	        5) ./Deploy/permissions.sh ; menu ;;
+			6) ./Deploy/gke-kubernets.sh ; menu ;;
+			7) ./Deploy/cloud-sql.sh ; menu ;;
+			8) ./Deploy/filestore-nfs.sh ; menu ;;
+			9) ./Deploy/artifact-registry.sh ; menu ;;
+			10) ./Deploy/deploy-ns.sh ; menu ;;
+			11) ./Deploy/deploy-pv.sh ; menu ;;
+			12) ./Deploy/deploy-pvc.sh ; menu ;;
+			13) ./Deploy/deploy-moodle-helm.sh ; menu ;;
+			14) ./Deploy/deploy-backend ; menu ;;
+			15) ./Deploy/deploy-ssl-redirect.sh ; menu ;;
+			16) ./Deploy/deploy-cloud-lb.sh ; menu ;;
+			17) ./Deploy/deploy_hpa.sh ; menu ;;
+			18) ./Deploy/redis.sh ; menu ;;
+			#19) ./Deploy/ ; menu ;;
+			20) ./Deploy/hurry_up.sh ; menu ;;
 		0) exit 0 ;;
 		*) echo -e $red"Wrong option."$clear; WrongCommand;;
         esac
